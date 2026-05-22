@@ -1,4 +1,5 @@
 import typing
+import sys
 
 
 def read_file(file_name: str) -> str:
@@ -10,7 +11,7 @@ def read_file(file_name: str) -> str:
         f.close()
         return content
     except Exception as error:
-        print(f"Error: {error}")
+        print(f"Error: {error}", file=sys.stderr)
         return ""
 
 
@@ -26,8 +27,9 @@ def add_character_eol(text: str) -> str:
 
 
 def save_new_file(content: str) -> None:
-    save_name: str = input("Enter a name to save the file "
-                           "(leave empty to cancel): ")
+    print("Enter a name to save the file "
+          "(leave empty to cancel): ")
+    save_name: str = sys.stdin.readline().strip()
     if save_name == "":
         print("No name entered. File will not be saved.")
         return
@@ -38,11 +40,12 @@ def save_new_file(content: str) -> None:
         f.close()
         print(f"File saved successfully as '{save_name}'")
     except Exception as error:
-        print(f"Error saving file: {error}")
+        print(f"Error saving file: {error}", file=sys.stderr)
 
 
 def handle() -> None:
-    file_name: str = input("Name the file to open: ")
+    print("Name the file to open: ")
+    file_name: str = sys.stdin.readline().strip()
     print(f"File name is: {file_name}")
     content: str = read_file(file_name)
     if content == "":
